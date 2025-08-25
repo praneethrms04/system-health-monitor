@@ -1,0 +1,6 @@
+{
+  "apiUrl": "https://system-health-monitor-arqh.onrender.com/api/report",
+  "apiKey": "REPLACE_WITH_YOUR_AGENT_TOKEN",
+  "intervalMinutes": 30,
+  "jitterSeconds": 30
+}
