@@ -22,36 +22,111 @@ const ReportSidePanel: React.FC<Props> = ({
   reports,
 }) => {
 
-  // Define columns for React Table
-  const columns: ColumnDef<Report>[] = [
+  const columns: ColumnDef<any>[] = [
     {
       accessorKey: "createdAt",
       header: "Timestamp",
       cell: (info) => new Date(info.getValue() as string).toLocaleString(),
     },
+
     {
-      accessorKey: "payload.osUpdated",
-      header: "OS Updated",
-      cell: (info) => (info.getValue() ? "Up-to-date" : "Pending"),
+      accessorKey: "payload.os",
+      header: "OS",
+      cell: (info) => info.getValue() ?? "-",
     },
+
     {
       accessorKey: "payload.diskEncrypted",
       header: "Disk Encrypted",
-      cell: (info) => (info.getValue() ? "Yes" : "No"),
+      cell: (info) => {
+        const value = info.getValue();
+        return (
+          <span style={{ color: value ? "green" : "red" }}>
+            {value === null || value === undefined ? "-" : value ? "Yes" : "No"}
+          </span>
+        );
+      },
+    },
+    {
+      accessorKey: "payload.osUpdated",
+      header: "OS Updated",
+      cell: (info) => {
+        const value = info.getValue();
+        return (
+          <span style={{ color: value ? "green" : "red" }}>
+            {value === null || value === undefined
+              ? "-"
+              : value
+              ? "Up-to-date"
+              : "Pending"}
+          </span>
+        );
+      },
+    },
+    {
+      accessorKey: "payload.updatesPending",
+      header: "Updates Pending",
+      cell: (info) => info.getValue() ?? "-",
     },
     {
       accessorKey: "payload.antivirusInstalled",
-      header: "Antivirus",
-      cell: (info) => (info.getValue() ? "OK" : "Issue"),
+      header: "Antivirus Installed",
+      cell: (info) => {
+        const value = info.getValue();
+        return (
+          <span style={{ color: value ? "green" : "red" }}>
+            {value === null || value === undefined
+              ? "-"
+              : value
+              ? "OK"
+              : "Issue"}
+          </span>
+        );
+      },
     },
+    {
+      accessorKey: "payload.antivirusRunning",
+      header: "Antivirus Running",
+      cell: (info) => {
+        const value = info.getValue();
+        return (
+          <span style={{ color: value ? "green" : "red" }}>
+            {value === null || value === undefined ? "-" : value ? "Yes" : "No"}
+          </span>
+        );
+      },
+    },
+    {
+      accessorKey: "payload.antivirusName",
+      header: "Antivirus Name",
+      cell: (info) => info.getValue() ?? "-",
+    },
+    {
+      accessorKey: "payload.sleepPolicyOk",
+      header: "Sleep Policy OK",
+      cell: (info) => {
+        const value = info.getValue();
+        return (
+          <span style={{ color: value ? "green" : "red" }}>
+            {value === null || value === undefined ? "-" : value ? "Yes" : "No"}
+          </span>
+        );
+      },
+    },
+    {
+      accessorKey: "payload.sleepTimeoutMinutes",
+      header: "Sleep Timeout (min)",
+      cell: (info) => info.getValue() ?? "-",
+    },
+   
   ];
 
   const table = useReactTable({
     data: reports,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(), 
-    initialState: { pagination: { pageIndex: 0, pageSize : 10 } },
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: { pagination: { pageIndex: 0, pageSize: 10 } },
   });
 
   return (

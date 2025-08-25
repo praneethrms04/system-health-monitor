@@ -56,9 +56,42 @@ export default function MachinesPage() {
       { accessorKey: "hostname", header: "Hostname" },
       { accessorKey: "os", header: "OS / Version" },
       { accessorKey: "diskEncrypted", header: "Disk Encrypted" },
-      { accessorKey: "osUpdated", header: "OS Updated" },
-      { accessorKey: "antivirusInstalled", header: "Antivirus" },
-      { accessorKey: "sleepPolicyOk", header: "Sleep Policy" },
+      {
+        accessorKey: "osUpdated",
+        header: "OS Updated",
+        cell: ({ getValue }: any) => {
+          const value = getValue();
+          return (
+            <span style={{ color: value ? "green" : "red" }}>
+              {value ? "Yes" : "No"}
+            </span>
+          );
+        },
+      },
+      {
+        accessorKey: "antivirusInstalled",
+        header: "Antivirus",
+        cell: ({ getValue }: any) => {
+          const value = getValue();
+          return (
+            <span style={{ color: value ? "green" : "red" }}>
+              {value ? "Yes" : "No"}
+            </span>
+          );
+        },
+      },
+      {
+        accessorKey: "sleepPolicyOk",
+        header: "Sleep Policy",
+        cell: ({ getValue }: any) => {
+          const value = getValue();
+          return (
+            <span style={{ color: value ? "green" : "red" }}>
+              {value ? "Yes" : "No"}
+            </span>
+          );
+        },
+      },
       { accessorKey: "lastSeenAt", header: "Last Seen" },
     ],
     []
@@ -69,7 +102,7 @@ export default function MachinesPage() {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: { pagination: { pageIndex: 0, pageSize : 10 } },
+    initialState: { pagination: { pageIndex: 0, pageSize: 10 } },
   });
 
   return (
